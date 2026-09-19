@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Arcade | Premium Free Games</title>
+    <style>
+        :root {
+            --bg-color: #08090f;
+            --panel-bg: #11131f;
+            --accent-glow: #a12bf7;
+            --neon-blue: #00f0ff;
+            --text-main: #ffffff;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(180deg, #11131f 0%, #08090f 100%);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #1a1d30;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--neon-blue), var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .ad-container {
+            max-width: 900px;
+            height: 90px;
+            background: rgba(17, 19, 31, 0.6);
+            border: 1px dashed #333750;
+            margin: 25px auto;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #525875;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        .arcade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .game-box {
+            background-color: var(--panel-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid #1c1f35;
+        }
+        .game-box:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--neon-blue);
+            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.25);
+        }
+        .cover-art {
+            width: 100%;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.8rem;
+        }
+        .art-1 { background: linear-gradient(135deg, #1e0b36, #4c1185); }
+        .art-2 { background: linear-gradient(135deg, #0b2536, #115785); }
+        .art-3 { background: linear-gradient(135deg, #0b361a, #11853b); }
+        .art-4 { background: linear-gradient(135deg, #36220b, #854f11); }
+        .game-title {
+            padding: 15px;
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(4, 5, 9, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .modal-window {
+            background-color: var(--panel-bg);
+            width: 95%;
+            max-width: 1000px;
+            height: 85vh;
+            border-radius: 24px;
+            border: 2px solid var(--accent-glow);
+            box-shadow: 0 0 40px rgba(161, 43, 247, 0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .modal-top {
+            padding: 15px 25px;
+            background-color: #161829;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #22263f;
+        }
+        .exit-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        .exit-btn:hover { color: #ff4545; }
+        .iframe-container { flex-grow: 1; background-color: #000; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">⚡ Elite Arcade</div>
+    </header>
+
+    <div class="ad-container">
+        📊 GOOGLE ADSENSE MONETIZATION ZONE (Your Future Ad Revenue Code Goes Here)
+    </div>
+
+    <div class="arcade-grid">
+        <div class="game-box" onclick="play('Cosmic Velocity', 'https://famobi.com')">
+            <div class="cover-art art-1">🚀</div>
+            <p class="game-title">Cosmic Velocity</p>
+        </div>
+        <div class="game-box" onclick="play('Neon Ping Pong', 'https://famobi.com')">
+            <div class="cover-art art-2">🏓</div>
+            <p class="game-title">Neon Ping Pong</p>
+        </div>
+        <div class="game-box" onclick="play('Cyber Matcher', 'https://famobi.com')">
+            <div class="cover-art art-3">🧩</div>
+            <p class="game-title">Cyber Matcher</p>
+        </div>
+        <div class="game-box" onclick="play('Tactical Arrow', 'https://famobi.com')">
+            <div class="cover-art art-4">🎯</div>
+            <p class="game-title">Tactical Arrow</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="playerZone">
+        <div class="modal-window">
+            <div class="modal-top">
+                <h3 style="margin:0;" id="activeTitle">Loading Arcade App...</h3>
+                <button class="exit-btn" onclick="shutdown()">&times;</button>
+            </div>
+            <div class="iframe-container">
+                <iframe id="gameMachine" src=""></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('playerZone');
+        const machine = document.getElementById('gameMachine');
+        const headline = document.getElementById('activeTitle');
+
+        function play(gameName, gameUrl) {
+            headline.innerText = gameName;
+            machine.src = gameUrl;
+            overlay.style.display = 'flex';
+        }
+        function shutdown() {
+            overlay.style.display = 'none';
+            machine.src = ''; 
+        }
+    </script>
+</body>
+</html>
